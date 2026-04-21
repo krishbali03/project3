@@ -1,4 +1,7 @@
+package org.example.project3;
+
 import java.util.List;
+import org.example.project3.GameDatabase;
 //when we wanna go through the past games we will display this
 public class GameHistory {
     private final GameDatabase db;

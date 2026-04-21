@@ -1,3 +1,5 @@
+package org.example.project3;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 //should i add more comments? yes. will i? NO!

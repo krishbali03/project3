@@ -1,3 +1,5 @@
+package org.example.project3;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 //copy and pasted from hw5 with move added so that we can have client send updated

@@ -1,3 +1,5 @@
+package org.example.project3;
+
 import java.io.Serializable;
 public class Piece implements Serializable {
     public enum Color { RED, BLACK }

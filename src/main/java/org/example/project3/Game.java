@@ -1,3 +1,5 @@
+package org.example.project3;
+
 import java.io.Serializable;
 import java.util.UUID;
 //general came will save into database

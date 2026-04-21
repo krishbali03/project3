@@ -1,3 +1,5 @@
+package org.example.project3;
+
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
@@ -5,9 +7,9 @@ import java.util.List;
 
 public class GameDatabase {
     private Connection connection;
+    //look to see if db exists locally mind you this is a bad way to do it but im lazy
     public GameDatabase() {
         try {
-            //this may or not be a horrendus execution but we make a table for games if they dont exist hopefully?
             connection = DriverManager.getConnection("jdbc:sqlite:checkers.db");
             connection.createStatement().execute("""
                 CREATE TABLE IF NOT EXISTS games (
@@ -30,7 +32,7 @@ public class GameDatabase {
             e.printStackTrace();
         }
     }
-
+    //make an entry where we only care about who is playing and who won
     public void saveGame(String gameId, String player1, String player2, String winner) {
         try {
             PreparedStatement ps = connection.prepareStatement(
@@ -45,7 +47,7 @@ public class GameDatabase {
             e.printStackTrace();
         }
     }
-
+    //save the game status so that we can navigate
     public void saveMove(String gameId, int moveIndex, Board board) {
         try {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -61,10 +63,9 @@ public class GameDatabase {
             e.printStackTrace();
         }
     }
-
+    //get the game so that we can navigate it
     public Board getMove(String gameId, int moveIndex) {
         try {
-            // no sql injection on my watch LOSER
             PreparedStatement ps = connection.prepareStatement(
                     "SELECT board FROM moves WHERE game_id = ? AND move_index = ?"
             );
@@ -81,6 +82,7 @@ public class GameDatabase {
         }
         return null;
     }
+    //for ui
     public int getMoveCount(String gameId) {
         try {
             PreparedStatement ps = connection.prepareStatement(
@@ -96,6 +98,7 @@ public class GameDatabase {
         }
         return 0;
     }
+    //list view of ui
     public List<GameRecord> getAllGames() {
         List<GameRecord> records = new ArrayList<>();
         try {
@@ -116,26 +119,29 @@ public class GameDatabase {
         }
         return records;
     }
+    //practice safe sql
     public void close() {
         try { connection.close(); } catch (SQLException e) { e.printStackTrace(); }
     }
-    // keep a summary of each game
+    //store games as such
     public static class GameRecord {
         public final String gameId;
         public final String player1;
         public final String player2;
         public final String winner;
         public final String datePlayed;
+
         public GameRecord(String gameId, String player1, String player2, String winner, String datePlayed) {
-            this.gameId     = gameId;
-            this.player1    = player1;
-            this.player2    = player2;
-            this.winner     = winner;
+            this.gameId = gameId;
+            this.player1 = player1;
+            this.player2 = player2;
+            this.winner = winner;
             this.datePlayed = datePlayed;
         }
+
         @Override
         public String toString() {
-            return player1 + " vs " + player2 + " | Winner: " + winner + " | " + datePlayed;
+            return player1 + " vs " + player2  + winner + "DEMOLISHED ON" + " | " + datePlayed;
         }
     }
 }

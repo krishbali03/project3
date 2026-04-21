@@ -1,4 +1,6 @@
+package org.example.project3;
 import java.io.Serializable;
+
 public class Move implements Serializable {
     int fromRow, fromCol, toRow, toCol;
     boolean isCapture;
